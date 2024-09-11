@@ -11,7 +11,7 @@ def create_connection():
         host= "localhost",
         user = "root"
         password = "root"
-        database = "DiadeReto"
+        database = "reto"
     )
 #Página principal (index)
 @app.route('/')
@@ -19,7 +19,7 @@ def index():
     return render_template('index.html')
 
 #formulario para agragar datos
-@app.route('/agragar_datos', methods = ['GET', 'POST'])
+@app.route('/add_data', methods = ['GET', 'POST'])
 def agregarDatos():
     if request.method = 'POST':
         #Relación de variables
