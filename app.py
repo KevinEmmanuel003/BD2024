@@ -9,9 +9,9 @@ app = Flask(__name__)
 def create_connection():
     return mysql.connector.connect(
         host= "localhost",
-        user = "root"
-        password = "root"
-        database = "reto"
+        user = "root",
+        password = "root",
+        database = "reto",
     )
 #Página principal (index)
 @app.route('/')
@@ -21,7 +21,7 @@ def index():
 #formulario para agragar datos
 @app.route('/add_data', methods = ['GET', 'POST'])
 def agregarDatos():
-    if request.method = 'POST':
+    if request.method == 'POST':
         #Relación de variables
         pais = request.form['pais']
         estado = request.form['estado']
@@ -64,5 +64,5 @@ def agregarDatos():
         return render_template('/add.html')
     return render_template('/add.html')
 
-if __name__ = '__main__':
+if __name__ == '__main__':
     app.run(debug=True)
