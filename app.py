@@ -51,7 +51,16 @@ def agregarDatos():
         connection.commit()
         codigo_postal_id = cursor.lastrowid
 
-        #ingresar còdigo postal
+        #ingresar Colonia
         curso.execute("INSERT INTO colonias (nombre, ciudad_id, codigo_postal_id) VALUES (%s, %s, %s)",(colonia, ciudad_id, codigo_postal_id))
         connection.commit()
-        estado_id = cursor.lastrowid
+        colonia_id = cursor.lastrowid
+
+        connection.commit()
+        connection.close()
+
+        return redirect(url_for('index'))
+    return render_template('add_data.html')
+
+if __name__ = '__main__':
+    app.run(debug=True)
