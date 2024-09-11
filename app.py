@@ -10,16 +10,21 @@ def create_connection():
     return mysql.connector.connect(
         host= "localhost",
         user = "root",
-        password = "root",
-        database = "reto",
+        password = "",
+        database = "reto"
     )
 #Página principal (index)
-@app.route('/')
+@app.route('/', methods = ['GET'])
 def index():
     return render_template('index.html')
 
+#Página principal (index)
+@app.route('/paginaAdd', methods = ['GET'])
+def indexx():
+    return render_template('add.html')
+
 #formulario para agragar datos
-@app.route('/add_data', methods = ['GET', 'POST'])
+@app.route('/agragar_datos', methods = ['GET', 'POST'])
 def agregarDatos():
     if request.method == 'POST':
         #Relación de variables
@@ -32,37 +37,33 @@ def agregarDatos():
         cursor = connection.cursor()
 
         #ingresar pais
-        curso.execute("INSERT INTO paises (nombre) VALUES (%s)",(pais,))
+        cursor.execute("INSERT INTO tpaises (Nombre) VALUES (%s)",(pais,))
         connection.commit() #envia la decalraciòn al servidor de MySQL y confirma la transacciòn
         pais_id = cursor.lastrowid #devuelve el valor generado para el autoingramentable
 
         #ingresar estado
-        curso.execute("INSERT INTO estados (nombre, pais_id) VALUES (%s, %s)",(estado, pais_id))
+        cursor.execute("INSERT INTO testados (Nombre, TPaises_Id) VALUES (%s, %s)",(estado, pais_id))
         connection.commit()
         estado_id = cursor.lastrowid
 
         #ingresar ciudad
-        curso.execute("INSERT INTO ciudades (nombre, estado_id) VALUES (%s, %s)",(ciudad, estado_id))
+        cursor.execute("INSERT INTO tciudades (Nombre, TEstados_Id) VALUES (%s, %s)",(ciudad, estado_id))
         connection.commit()
         ciudad_id = cursor.lastrowid
 
-        #ingresar còdigo postal
-        curso.execute("INSERT INTO codigos_postales (nombre, ciudad_id) VALUES (%s, %s)",(codigo_postal, ciudad_id))
+        # 4. Insertar Código Postal
+        cursor.execute("INSERT INTO tcodigosp (Codigo, TCiudades_Id) VALUES (%s, %s)", (codigo_postal, ciudad_id))
         connection.commit()
         codigo_postal_id = cursor.lastrowid
 
-        #ingresar Colonia
-        curso.execute("INSERT INTO colonias (nombre, ciudad_id, codigo_postal_id) VALUES (%s, %s, %s)",(colonia, ciudad_id, codigo_postal_id))
-        connection.commit()
-        colonia_id = cursor.lastrowid
+         # 5. Insertar Colonia
+        cursor.execute("INSERT INTO tcolonias (Nombre, TCiudades_Id, TCodigosP_Id) VALUES (%s, %s, %s)", (colonia, ciudad_id, codigo_postal_id))
 
         connection.commit()
         connection.close()
 
-        return redirect(url_for('/'))
-    else:
-        return render_template('add.html')
-    return render_template('add.html')
+        return redirect('/')
+        return template('add_data')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
