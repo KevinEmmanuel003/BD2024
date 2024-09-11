@@ -47,6 +47,11 @@ def agregarDatos():
         ciudad_id = cursor.lastrowid
 
         #ingresar còdigo postal
-        curso.execute("INSERT INTO codigos_ (nombre, pais_id) VALUES (%s, %s)",(estado, pais_id))
-        connection.commit() #envia la decalraciòn al servidor de MySQL y confirma la transacciòn
-        estado_id = cursor.lastrowid #devuelve el valor generado para el autoingramentable
+        curso.execute("INSERT INTO codigos_postales (nombre, ciudad_id) VALUES (%s, %s)",(codigo_postal, ciudad_id))
+        connection.commit()
+        codigo_postal_id = cursor.lastrowid
+
+        #ingresar còdigo postal
+        curso.execute("INSERT INTO colonias (nombre, ciudad_id, codigo_postal_id) VALUES (%s, %s, %s)",(colonia, ciudad_id, codigo_postal_id))
+        connection.commit()
+        estado_id = cursor.lastrowid
