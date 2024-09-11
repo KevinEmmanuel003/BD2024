@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for
 #importamos la libreria mysql para la conexión
 import mysql.connector
 
+#Cristo :D
 
 app = Flask(__name__)
 
