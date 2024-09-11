@@ -59,7 +59,7 @@ def agregarDatos():
         connection.commit()
         connection.close()
 
-        return redirect(url_for('/'))
+        return redirect(url_for('index'))
     else:
         return render_template('/add.html')
     return render_template('/add.html')
